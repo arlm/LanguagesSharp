@@ -35,6 +35,7 @@ namespace TIS100Sharp
             lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.OP_2PARAM, "\\b(MOV)\\b"));
             lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.COMMA, ","));
             lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.COLON, ":"));
+            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.EXCLAMATION, "!"));
             lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.HASH, "#"));
             lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.STRING, "\\b([A-Z_]+)\\b"));
 			return lexer;
@@ -47,15 +48,15 @@ namespace TIS100Sharp
         }
 
 		[Production("reference : STRING ")]
-		public string StringValue(Token<Tis100Token> stringToken)
+        public Operands.Reference StringValue(Token<Tis100Token> stringToken)
 		{
-            return stringToken.StringWithoutQuotes;
+            return new Operands.Reference(stringToken.StringWithoutQuotes);
 		}
 
 		[Production("value : INT ")]
-		public int IntValue(Token<Tis100Token> intToken)
+        public Literal IntValue(Token<Tis100Token> intToken)
 		{
-			return intToken.IntValue;
+            return new Literal(intToken.IntValue);
 		}
 
 		[Production("value : NIL ")]
@@ -76,9 +77,9 @@ namespace TIS100Sharp
         }
 
 		[Production("operator : STRING COLON ")]
-        public Reference LabelValue(Token<Tis100Token> labelToken, object forget)
+        public Operators.Reference LabelValue(Token<Tis100Token> labelToken, object forget)
 		{
-            return new Reference(labelToken.StringWithoutQuotes);
+            return new Operators.Reference(labelToken.StringWithoutQuotes);
 		}
 
 		//[Production("comment : HASH TEXT* EOL")]

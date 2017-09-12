@@ -13,6 +13,7 @@ namespace TIS100Sharp
 		SOURCE,
 		COMMA,
         COLON,
+        EXCLAMATION,
         HASH,
 		NIL,
         WHITE_SPACE,
