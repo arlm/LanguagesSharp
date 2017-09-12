@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TIS100_Sharp
+namespace TIS100Sharp
 {
     class Program
     {
