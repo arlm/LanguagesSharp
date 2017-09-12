@@ -1,7 +1,7 @@
 ﻿using System;
 namespace TIS100Sharp.Operands
 {
-    public class Reference : Operand
+    public class Reference : Operator
     {
         public string Name { get; private set; }
 

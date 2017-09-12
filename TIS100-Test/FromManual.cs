@@ -14,18 +14,16 @@ namespace TIS100Test
         public void LeftDoubleRight()
         {
             var parser = Tis100Parser.Build();
-            var result = parser.Parse("MOV LEFT, ACC");
-//            var result = parser.Parse(@"
-//MOV LEFT, ACC
-//ADD ACC
-//MOV ACC, RIGHT
-            //");
+            var result = parser.Parse(@"
+MOV LEFT, ACC
+ADD ACC
+MOV ACC, RIGHT
+            ");
 
-            Assert.True(result.IsEnded);
             Assert.False(result.IsError);
-            Assert.IsInstanceOf<List<object>>(result.Result);
+            Assert.IsInstanceOf<List<Operator>>(result.Result);
 
-            var program = result.Result as List<object>;
+            var program = result.Result as List<Operator>;
             Assert.AreEqual(3, program.Count);
 
             Assert.IsInstanceOf<Move>(program[0]);

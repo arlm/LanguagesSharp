@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="sly" Version="1.0.4" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Operators\" />
     <Folder Include="Operands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="sly" Version="1.0.4" />
   </ItemGroup>
 </Project>

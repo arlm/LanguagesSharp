@@ -5,8 +5,6 @@ namespace TIS100Sharp.Operators
 {
     public class Jump : Operator
     {
-
-        public Reference Reference => this.Operand as Reference;
         public Operand Operand { get; private set; }
         public ConditionType Condition { get; private set; }
 

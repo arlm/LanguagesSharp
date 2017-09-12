@@ -7,7 +7,7 @@ namespace TIS100Sharp.Operands
 		{
 			if (Enum.IsDefined(typeof(Available), name))
 			{
-				Enum.Parse(typeof(Available), name);
+                Reference = (Available) Enum.Parse(typeof(Available), name);
 			}
 			else
 			{
