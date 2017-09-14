@@ -1,5 +1,4 @@
-﻿using System;
-namespace TIS100Sharp.Operands
+﻿namespace TIS100Sharp.Operands
 {
     public class Reference : Operand
     {
