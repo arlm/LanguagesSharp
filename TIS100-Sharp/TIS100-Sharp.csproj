@@ -9,6 +9,9 @@
   <ItemGroup>
     <Folder Include="Operators\" />
     <Folder Include="Operands\" />
+    <Folder Include="Runtime\" />
+    <Folder Include="Runtime\Nodes\" />
+    <Folder Include="Runtime\Modules\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="sly" Version="1.0.4" />
