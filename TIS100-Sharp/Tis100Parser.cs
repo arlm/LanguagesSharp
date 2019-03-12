@@ -11,34 +11,14 @@ namespace TIS100Sharp
 {
     public class Tis100Parser
     {
-        public static Parser<Tis100Token> Build()
+        public static Parser<Tis100Token, List<Operator>> Build()
 		{
-            Tis100Parser parserInstance = new Tis100Parser();
-			ParserBuilder builder = new ParserBuilder();
+            var parserInstance = new Tis100Parser();
+			var builder = new ParserBuilder<Tis100Token, List<Operator>>();
 
-			var parser = builder.BuildParser<Tis100Token>(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT,  "program");
+			var parser = builder.BuildParser(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT,  "program");
 
-            return parser;
-		}
-
-        [LexerConfiguration]
-        public ILexer<Tis100Token> BuildJsonLexer(ILexer<Tis100Token> lexer)
-		{
-			lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.EOL, "[\\n\\r]+", true, true));
-			lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.WHITE_SPACE, "[ \\t]+", true));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.INT, "(-?[0-9]+)"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.SOURCE, "\\b(ANY|LAST|ACC|UP|DOWN|LEFT|RIGHT)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.NIL, "\\b(NIL)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.OP, "\\b(NOP|SWP|SAV|NEG)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.OP_JUMP, "\\b(JMP|JEZ|JNZ|JGZ|JLZ)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.OP_1PARAM, "\\b(ADD|SUB|JRO)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.OP_2PARAM, "\\b(MOV)\\b"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.COMMA, ","));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.COLON, ":"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.EXCLAMATION, "!"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.HASH, "#"));
-            lexer.AddDefinition(new TokenDefinition<Tis100Token>(Tis100Token.STRING, "\\b([A-Z_]+)\\b"));
-			return lexer;
+            return parser.Result;
 		}
 
         [Production("program : operator * ")]
@@ -47,10 +27,10 @@ namespace TIS100Sharp
             return tokens.Cast<Operator>().ToList();
         }
 
-		[Production("reference : STRING ")]
-        public Operands.Reference StringValue(Token<Tis100Token> stringToken)
+		[Production("reference : REFERENCE ")]
+        public Operands.Reference ReferenceValue(Token<Tis100Token> referenceToken)
 		{
-            return new Operands.Reference(stringToken.StringWithoutQuotes);
+            return new Operands.Reference(referenceToken.StringWithoutQuotes);
 		}
 
 		[Production("value : INT ")]
@@ -59,8 +39,8 @@ namespace TIS100Sharp
             return new Literal(intToken.IntValue);
 		}
 
-		[Production("value : NIL ")]
-		public Literal NillValue(object forget)
+		[Production("value : NIL [d] ")]
+		public Literal NillValue()
 		{
 			return null;
 		}
@@ -76,14 +56,14 @@ namespace TIS100Sharp
             return new Register(sourceToken.StringWithoutQuotes);
         }
 
-		[Production("operator : STRING COLON ")]
-        public Operators.Reference LabelValue(Token<Tis100Token> labelToken, object forget)
+		[Production("operator : REFERENCE COLON [d] ")]
+        public Operators.Reference LabelValue(Token<Tis100Token> labelToken)
 		{
             return new Operators.Reference(labelToken.StringWithoutQuotes);
 		}
 
-		//[Production("comment : HASH TEXT* EOL")]
-  //      public string CommentValue(object forget, List<Token<Tis100Token>> textTokens, object terminator)
+		//[Production("comment : HASH [d] ")]
+  //      public string CommentValue(List<Token<Tis100Token>> textTokens, object terminator)
 		//{
   //          return string.Join(" ", textTokens.Select(t => t.StringWithoutQuotes));
 		//}
@@ -142,8 +122,8 @@ namespace TIS100Sharp
             }
         }
 
-		[Production("operator : OP_2PARAM value COMMA value ")]
-        public Operator DoubleOperatorValue(Token<Tis100Token> operandToken, Operand source, object forget, Operand destination)
+		[Production("operator : OP_2PARAM value COMMA [d] value ")]
+        public Operator DoubleOperatorValue(Token<Tis100Token> operandToken, Operand source, Operand destination)
 		{
             switch (operandToken.StringWithoutQuotes)
             {
