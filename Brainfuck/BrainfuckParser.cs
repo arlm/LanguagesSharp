@@ -9,31 +9,13 @@ namespace Brainfuck
 {
     public class BrainfuckParser
     {
-        public static Parser<BrainfuckToken> Build()
+        public static Parser<BrainfuckToken, List<Operator>> Build()
         {
-            BrainfuckParser parserInstance = new BrainfuckParser();
-            ParserBuilder builder = new ParserBuilder();
+            var parserInstance = new BrainfuckParser();
+            var builder = new ParserBuilder<BrainfuckToken, List<Operator>>();
+            var result = builder.BuildParser(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT, "program");
 
-            var parser = builder.BuildParser<BrainfuckToken>(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT, "program");
-
-            return parser;
-        }
-
-        [LexerConfiguration]
-        public ILexer<BrainfuckToken> BuildLexer(ILexer<BrainfuckToken> lexer)
-        {
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.EOL, "[\\n\\r]+", true, true));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.WHITE_SPACE, "[ \\t]+", true));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.TEXT, "[^\\n\\r \\t<>\\+\\-\\.\\,\\[\\]]+", true));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.GREATER_THAN, ">"));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.LESSER_THAN, "<"));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.PLUS, "\\+"));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.MINUS, "\\-"));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.DOT, "\\."));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.COMMA, "\\,"));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.OPEN_BRACKET, "\\["));
-            lexer.AddDefinition(new TokenDefinition<BrainfuckToken>(BrainfuckToken.CLOSE_BRACKET, "\\]"));
-            return lexer;
+            return result.Result;
         }
 
         [Production("program : operation* ")]
@@ -63,10 +45,10 @@ namespace Brainfuck
         [Production("io : COMMA ")]
         public Operator InputData(Token<BrainfuckToken> token) => new Operator(token.TokenID);
 
-        [Production("while : OPEN_BRACKET CLOSE_BRACKET ")]
-        public Block JumpIfZero(Token<BrainfuckToken> open, Token<BrainfuckToken> close) => new Block(Enumerable.Empty<Operator>());
+        [Production("while : OPEN_BRACKET [d] CLOSE_BRACKET [d] ")]
+        public Block JumpIfZero() => new Block(Enumerable.Empty<Operator>());
 
-        [Production("while : OPEN_BRACKET operation+ CLOSE_BRACKET ")]
-        public Block JumpIfZero(Token<BrainfuckToken> open, List<object> closure, Token<BrainfuckToken> close) => new Block(closure.Cast<Operator>());
+        [Production("while : OPEN_BRACKET [d] operation+ CLOSE_BRACKET [d] ")]
+        public Block JumpIfZero(List<object> closure) => new Block(closure.Cast<Operator>());
     }
 }

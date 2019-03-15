@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Brainfuck;
 using Brainfuck.Operators;
 using Brainfuck.Runtime;
+using System.Linq;
 
 namespace BrainfuckTest
 {
@@ -28,7 +29,8 @@ namespace BrainfuckTest
             CheckAST(parser.Parse("[->+<]"));
             CheckAST(parser.Parse(" [  -\t> \t+\n<\r]\n\r"));
             CheckAST(parser.Parse("Testing how brainfuck works [ this should be ignored -&> 5 + 4 < 10\"]\""));
-            var block = CheckAST(parser.Parse(@"
+
+            var parseResult = parser.Parse(@"
             Let's do a test?
 [ This is not a comment and should support all characters (including Unicode and Emojis)
     for (int i = 0; i - 1 > 0; i = i + 1)
@@ -40,7 +42,8 @@ namespace BrainfuckTest
             break;
         }
     }
-]"));
+]");
+            var block = CheckAST(parseResult);
 
             Pointer.Initialize(new byte[] { 0, 0 });
             block.Execute();
@@ -60,7 +63,7 @@ namespace BrainfuckTest
         {
             var parser = BrainfuckParser.Build();
 
-            var block = parser.Parse(@"
+            var parseResult = parser.Parse(@"
                 ++       Cell c0 = 2
                 > +++++  Cell c1 = 5
 
@@ -81,7 +84,12 @@ namespace BrainfuckTest
                 > -Subtract 1 from c1
                 ]
                 < .Print out c0 which has the value 55 which translates to ""7""!
-").Result as List<Operator>;
+");
+
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(parseResult.IsOk);
+
+            var block = parseResult.Result as List<Operator>;
 
             block.Execute();
             Assert.AreEqual(0x37, Pointer.Instance.Buffer[0]);
@@ -93,7 +101,7 @@ namespace BrainfuckTest
         {
             var parser = BrainfuckParser.Build();
 
-            var block = parser.Parse(@"
+            var parseResult = parser.Parse(@"
                 [ This program prints ""Hello World!"" and a newline to the screen, its
                   length is 106 active command characters. [It is not the shortest.]
 
@@ -128,7 +136,12 @@ namespace BrainfuckTest
                 Cell No :   0   1   2   3   4   5   6
                 Contents:   0   0  72 104  88  32   8
                 Pointer:    ^
-").Result as List<Operator>;
+");
+
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(parseResult.IsOk);
+
+            var block = parseResult.Result as List<Operator>;
 
             Pointer.Initialize();
             block.Execute();
@@ -140,7 +153,7 @@ namespace BrainfuckTest
             Assert.AreEqual(32, Pointer.Instance.Buffer[5]);
             Assert.AreEqual(8, Pointer.Instance.Buffer[6]);
 
-            block = parser.Parse(@"
+            parseResult = parser.Parse(@"
                 [ This program prints ""Hello World!"" and a newline to the screen, its
                   length is 106 active command characters. [It is not the shortest.]
 
@@ -186,7 +199,12 @@ namespace BrainfuckTest
                 +++.------.--------.Cell #3 for 'rl' and 'd'
                 >> +.Add 1 to Cell #5 gives us an exclamation point
                 > ++.And finally a newline from Cell #6
-").Result as List<Operator>;
+");
+
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(parseResult.IsOk);
+
+            block = parseResult.Result as List<Operator>;
 
             Pointer.Initialize();
             block.Execute();
@@ -198,7 +216,12 @@ namespace BrainfuckTest
             Assert.AreEqual(33, Pointer.Instance.Buffer[5]);
             Assert.AreEqual(10, Pointer.Instance.Buffer[6]);
 
-            block = parser.Parse("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]").Result as List<Operator>;
+            parseResult = parser.Parse("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]");
+
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(parseResult.IsOk);
+
+            block = parseResult.Result as List<Operator>;
 
             Pointer.Initialize();
             block.Execute();
@@ -210,7 +233,12 @@ namespace BrainfuckTest
             Assert.AreEqual(32, Pointer.Instance.Buffer[5]);
             Assert.AreEqual(8, Pointer.Instance.Buffer[6]);
 
-            block = parser.Parse(">>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.").Result as List<Operator>;
+            parseResult = parser.Parse(">>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.");
+
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(parseResult.IsOk);
+
+            block = parseResult.Result as List<Operator>;
 
             block.Execute();
             Assert.AreEqual(0, Pointer.Instance.Buffer[0]);
@@ -222,9 +250,11 @@ namespace BrainfuckTest
             Assert.AreEqual(10, Pointer.Instance.Buffer[6]);
         }
 
-        private static Block CheckAST(sly.parser.ParseResult<BrainfuckToken> result)
+        private static Block CheckAST(sly.parser.ParseResult<BrainfuckToken, List<Operator>> result)
         {
-            Assert.False(result.IsError);
+            Assert.False(result.IsError, string.Join(", ", result.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.True(result.IsOk);
+
             Assert.IsInstanceOf<List<Operator>>(result.Result);
 
             var program = result.Result as List<Operator>;
