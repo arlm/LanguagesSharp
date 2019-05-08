@@ -5,12 +5,14 @@
 		<TargetFramework>netcoreapp2.1</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="2.3.2" />
-		<PackageReference Include="CommandLineParser" Version="1.9.71" />
-        <PackageReference Include="sly" Version="1.0.4" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="3.0.0" />
+		<PackageReference Include="CommandLineParser" Version="2.5.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Operators\" />
 	  <Folder Include="Runtime\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\csly\sly\sly.csproj" />
 	</ItemGroup>
 </Project>

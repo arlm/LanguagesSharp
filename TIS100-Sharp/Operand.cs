@@ -1,5 +1,4 @@
-﻿using System;
-namespace TIS100Sharp
+﻿namespace TIS100Sharp
 {
     public abstract class Operand
     {

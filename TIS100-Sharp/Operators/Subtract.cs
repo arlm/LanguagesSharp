@@ -1,5 +1,4 @@
-﻿using System;
-namespace TIS100Sharp.Operators
+﻿namespace TIS100Sharp.Operators
 {
     public class Subtract : Operator
     {

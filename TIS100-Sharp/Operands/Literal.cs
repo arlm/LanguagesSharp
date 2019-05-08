@@ -1,10 +1,12 @@
-﻿using System;
-namespace TIS100Sharp.Operands
+﻿namespace TIS100Sharp.Operands
 {
     public class Literal : Operand
     {
-        public Literal()
+        public int Value { get; private set; }
+
+        public Literal(int value)
         {
+            this.Value = value;
         }
     }
 }

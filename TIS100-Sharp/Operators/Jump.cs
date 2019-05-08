@@ -1,7 +1,4 @@
-﻿using System;
-using TIS100Sharp.Operands;
-
-namespace TIS100Sharp.Operators
+﻿namespace TIS100Sharp.Operators
 {
     public class Jump : Operator
     {
