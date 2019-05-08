@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExpressionParser", "c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLexerWithCallbacks", "csly\samples\GenericLexerWithCallbacks\GenericLexerWithCallbacks.csproj", "{3E959C07-871B-4DFA-A6D0-923BAB807443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainfuck", "Brainfuck\Brainfuck.csproj", "{C33541EB-E15D-4A5E-829F-62370E19D9B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainfuck-Test", "Brainfuck-Test\Brainfuck-Test.csproj", "{24E180BA-69BC-4640-9931-9D276D17F915}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +94,18 @@ Global
 		{3E959C07-871B-4DFA-A6D0-923BAB807443}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E959C07-871B-4DFA-A6D0-923BAB807443}.Release|x86.ActiveCfg = Release|Any CPU
 		{3E959C07-871B-4DFA-A6D0-923BAB807443}.Release|x86.Build.0 = Release|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{C33541EB-E15D-4A5E-829F-62370E19D9B9}.Release|x86.Build.0 = Release|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|x86.ActiveCfg = Release|Any CPU
+		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FFEF64A1-B45E-4CBC-9441-FFB0F90CDA53} = {A0F0ADC9-B3C4-4035-87FC-B0051E97627F}

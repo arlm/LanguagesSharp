@@ -21,9 +21,10 @@ MOV ACC, RIGHT
 
             Assert.False(result.IsError);
             Assert.True(result.IsOk);
-            Assert.IsInstanceOf<List<Operator>>(result.Result);
-            /*
+
             var program = result.Result as List<Operator>;
+        
+            Assert.NotNull(program);
             Assert.AreEqual(3, program.Count);
 
             Assert.IsInstanceOf<Move>(program[0]);
@@ -39,7 +40,7 @@ MOV ACC, RIGHT
 			move = program[2] as Move;
             Assert.AreEqual(Register.Available.ACC, (move.Source as Register).Reference);
             Assert.AreEqual(Port.Available.RIGHT, (move.Destination as Port).Reference);
-		*/}
+		}
 
         [Test]
         public void SequenceSorter()
@@ -61,9 +62,10 @@ NEGATIVE:
 
             Assert.False(result.IsError);
             Assert.True(result.IsOk);
-            Assert.IsInstanceOf<List<Operator>>(result.Result);
-            /*
+
             var program = result.Result as List<Operator>;
+
+            Assert.NotNull(program);
             Assert.AreEqual(11, program.Count);
 
             Assert.IsInstanceOf<TIS100Sharp.Operators.Reference>(program[0]);
@@ -122,6 +124,6 @@ NEGATIVE:
             Assert.IsInstanceOf<TIS100Sharp.Operands.Reference>(jump.Operand);
             Assert.AreEqual("START", (jump.Operand as TIS100Sharp.Operands.Reference).Name);
             Assert.AreEqual(Jump.ConditionType.Inconditional, jump.Condition);
-        */}
+        }
     }
 }

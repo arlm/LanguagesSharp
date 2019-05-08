@@ -22,32 +22,20 @@ namespace TIS100Sharp
 		}
 
         [Production("program : operator * ")]
-        public List<Operator> ProgramValue(List<object> tokens)
-        {
-            return tokens.Cast<Operator>().ToList();
-        }
+        public List<Operator> ProgramValue(List<object> tokens) => tokens.Cast<Operator>().ToList();
 
-		[Production("reference : REFERENCE ")]
-        public Operands.Reference ReferenceValue(Token<Tis100Token> referenceToken)
-		{
-            return new Operands.Reference(referenceToken.StringWithoutQuotes);
-		}
+        [Production("reference : REFERENCE ")]
+        public Operands.Reference ReferenceValue(Token<Tis100Token> referenceToken) => new Operands.Reference(referenceToken.StringWithoutQuotes);
 
-		[Production("value : INT ")]
-        public Literal IntValue(Token<Tis100Token> intToken)
-		{
-            return new Literal(intToken.IntValue);
-		}
+        [Production("value : INT ")]
+        public Literal IntValue(Token<Tis100Token> intToken) => new Literal(intToken.IntValue);
 
-		[Production("value : NIL [d] ")]
-		public Literal NillValue()
-		{
-			return null;
-		}
+        [Production("value : NIL [d] ")]
+        public Literal NillValue() => null;
 
-		[Production("value : SOURCE ")]
+        [Production("value : SOURCE ")]
         public Operand SourceValue(Token<Tis100Token> sourceToken)
-		{
+        {
             if (Enum.IsDefined(typeof(Port.Available), sourceToken.StringWithoutQuotes))
             {
                 return new Port(sourceToken.StringWithoutQuotes);
@@ -56,19 +44,16 @@ namespace TIS100Sharp
             return new Register(sourceToken.StringWithoutQuotes);
         }
 
-		[Production("operator : REFERENCE COLON [d] ")]
-        public Operators.Reference LabelValue(Token<Tis100Token> labelToken)
-		{
-            return new Operators.Reference(labelToken.StringWithoutQuotes);
-		}
+        [Production("operator : REFERENCE COLON [d] ")]
+        public Operators.Reference LabelValue(Token<Tis100Token> labelToken) => new Operators.Reference(labelToken.StringWithoutQuotes);
 
-		//[Production("comment : HASH [d] ")]
-  //      public string CommentValue(List<Token<Tis100Token>> textTokens, object terminator)
-		//{
-  //          return string.Join(" ", textTokens.Select(t => t.StringWithoutQuotes));
-		//}
+        //[Production("comment : HASH [d] ")]
+        //      public string CommentValue(List<Token<Tis100Token>> textTokens, object terminator)
+        //{
+        //          return string.Join(" ", textTokens.Select(t => t.StringWithoutQuotes));
+        //}
 
-		[Production("operator : OP ")]
+        [Production("operator : OP ")]
         public Operator SimpleOperatorValue(Token<Tis100Token> operandToken)
 		{
 			switch (operandToken.StringWithoutQuotes)
