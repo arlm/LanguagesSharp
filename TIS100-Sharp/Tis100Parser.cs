@@ -11,10 +11,10 @@ namespace TIS100Sharp
 {
     public class Tis100Parser
     {
-        public static Parser<Tis100Token, List<Operator>> Build()
+        public static Parser<Tis100Token, object> Build()
 		{
             var parserInstance = new Tis100Parser();
-			var builder = new ParserBuilder<Tis100Token, List<Operator>>();
+			var builder = new ParserBuilder<Tis100Token, object>();
 
 			var parser = builder.BuildParser(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT,  "program");
 
