@@ -86,7 +86,7 @@ namespace BrainfuckTest
                 < .Print out c0 which has the value 55 which translates to ""7""!
 ");
 
-            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(parseResult.IsOk);
 
             var block = parseResult.Result as List<Operator>;
@@ -138,7 +138,7 @@ namespace BrainfuckTest
                 Pointer:    ^
 ");
 
-            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(parseResult.IsOk);
 
             var block = parseResult.Result as List<Operator>;
@@ -201,7 +201,7 @@ namespace BrainfuckTest
                 > ++.And finally a newline from Cell #6
 ");
 
-            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(parseResult.IsOk);
 
             block = parseResult.Result as List<Operator>;
@@ -215,10 +215,10 @@ namespace BrainfuckTest
             Assert.AreEqual(87, Pointer.Instance.Buffer[4]);
             Assert.AreEqual(33, Pointer.Instance.Buffer[5]);
             Assert.AreEqual(10, Pointer.Instance.Buffer[6]);
-
+                      
             parseResult = parser.Parse("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]");
 
-            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(parseResult.IsOk);
 
             block = parseResult.Result as List<Operator>;
@@ -235,7 +235,7 @@ namespace BrainfuckTest
 
             parseResult = parser.Parse(">>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.");
 
-            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(parseResult.IsError, string.Join(", ", parseResult.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(parseResult.IsOk);
 
             block = parseResult.Result as List<Operator>;
@@ -250,9 +250,9 @@ namespace BrainfuckTest
             Assert.AreEqual(10, Pointer.Instance.Buffer[6]);
         }
 
-        private static Block CheckAST(sly.parser.ParseResult<BrainfuckToken, List<Operator>> result)
+        private static Block CheckAST(sly.parser.ParseResult<BrainfuckToken, object> result)
         {
-            Assert.False(result.IsError, string.Join(", ", result.Errors.Select(e => e.ErrorMessage).ToArray()));
+            Assert.False(result.IsError, string.Join(", ", result.Errors?.Select(e => e.ErrorMessage).ToArray() ?? Enumerable.Empty<string>()));
             Assert.True(result.IsOk);
 
             Assert.IsInstanceOf<List<Operator>>(result.Result);
