@@ -11,5 +11,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\csly\sly\sly.csproj" />
+    <ProjectReference Include="..\BabelFish\BabelFish.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
