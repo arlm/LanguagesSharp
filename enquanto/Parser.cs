@@ -94,7 +94,7 @@ namespace enquanto
         }
 
         [Production("statementPrim: IDENTIFIER ASSIGN [d] Parser_expressions")]
-        public INode<EnquantoType> AssignStmt(Token<EnquantoType> variable, INode<EnquantoType> value)
+        public INode<EnquantoType> AssignStmt(Token<EnquantoToken> variable, INode<EnquantoType> value)
         {
             var assign = new AssignStatement(variable.StringWithoutQuotes, value as IExpression<EnquantoType>);
             return assign as IStatement<EnquantoType>;
@@ -119,26 +119,26 @@ namespace enquanto
         }
 
         [Production("primary: INT")]
-        public INode<EnquantoType> PrimaryInt(Token<EnquantoType> intToken)
+        public INode<EnquantoType> PrimaryInt(Token<EnquantoToken> intToken)
         {
             return new IntegerConstant(intToken.IntValue);
         }
 
         [Production("primary: TRUE")]
         [Production("primary: FALSE")]
-        public INode<EnquantoType> PrimaryBool(Token<EnquantoType> boolToken)
+        public INode<EnquantoType> PrimaryBool(Token<EnquantoToken> boolToken)
         {
             return new BoolConstant(bool.Parse(boolToken.StringWithoutQuotes));
         }
 
         [Production("primary: STRING")]
-        public INode<EnquantoType> PrimaryString(Token<EnquantoType> stringToken)
+        public INode<EnquantoType> PrimaryString(Token<EnquantoToken> stringToken)
         {
             return new StringConstant(stringToken.StringWithoutQuotes);
         }
 
         [Production("primary: IDENTIFIER")]
-        public INode<EnquantoType> PrimaryId(Token<EnquantoType> varToken)
+        public INode<EnquantoType> PrimaryId(Token<EnquantoToken> varToken)
         {
             return new Variable(varToken.StringWithoutQuotes);
         }
@@ -199,7 +199,7 @@ namespace enquanto
         }
 
         [Operation((int)EnquantoToken.MINUS, Affix.PreFix, Associativity.Right, 100)]
-        public INode<EnquantoType> UnaryNumericExpression(Token<EnquantoType> operation, INode<EnquantoType> value)
+        public INode<EnquantoType> UnaryNumericExpression(Token<EnquantoToken> operation, INode<EnquantoType> value)
         {
             return new Neg(value as IExpression<EnquantoType>);
         }

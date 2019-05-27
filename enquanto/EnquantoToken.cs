@@ -1,4 +1,5 @@
 ﻿using System;
+using BabelFish.AST;
 using sly.lexer;
 
 namespace enquanto
@@ -19,9 +20,9 @@ namespace enquanto
 
         [Lexeme("(pule)")] SKIP = 6,
 
-        [Lexeme("(verdadeiro)")] TRUE = 7,
+        [Lexeme("(verdadeiro)")] [BooleanValue(true)] TRUE = 7,
 
-        [Lexeme("(falso)")] FALSE = 8,
+        [Lexeme("(falso)")] [BooleanValue(false)] FALSE = 8,
 
         [Lexeme("(não)")] NOT = 9,
 
