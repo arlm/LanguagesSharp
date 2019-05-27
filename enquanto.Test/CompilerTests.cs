@@ -218,9 +218,9 @@ retorne r
 
             Assert.That(result.Result, Is.TypeOf<SequenceStatement>());
             var seq = result.Result as SequenceStatement;
-            Assert.That(seq.Get(0), Is.TypeOf<PrintStatement>());
-            var print = seq.Get(0) as PrintStatement;
-            var expr = print.Value;
+            Assert.That(seq.Get(0), Is.TypeOf<AssignStatement>());
+            var assignment = seq.Get(0) as AssignStatement;
+            var expr = assignment.Value;
             Assert.That(expr, Is.TypeOf<BinaryOperation>());
             var bin = expr as BinaryOperation;
             Assert.That(bin.Operator, Is.EqualTo(BinaryOperator.AND));

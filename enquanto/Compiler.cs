@@ -82,12 +82,12 @@ namespace enquanto
             try
             {
                 var result = enquantoParser.Parse(whileCode);
+
                 if (result.IsOk)
                 {
                     var ast = result.Result;
 
                     var checker = new SemanticChecker();
-
                     var context = checker.SemanticCheck(ast);
 
                     var emiter = Emit<Func<int>>.NewDynamicMethod("Method" + Guid.NewGuid());

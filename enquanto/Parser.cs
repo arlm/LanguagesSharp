@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BabelFish.AST;
+using BabelFish.Compiler;
 using enquanto.Model;
 using sly.lexer;
 using sly.parser.generator;
@@ -128,7 +129,7 @@ namespace enquanto
         [Production("primary: FALSE")]
         public INode<EnquantoType> PrimaryBool(Token<EnquantoToken> boolToken)
         {
-            return new BoolConstant(bool.Parse(boolToken.StringWithoutQuotes));
+            return new BoolConstant(TypeConverter<EnquantoToken>.ParseBoolean(boolToken.TokenID));
         }
 
         [Production("primary: STRING")]

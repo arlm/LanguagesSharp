@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BabelFish.AST;
+using sly.lexer;
 
 namespace BabelFish.Compiler
 {
@@ -11,6 +13,8 @@ namespace BabelFish.Compiler
         public static Type Emit(T fromType) => GetAttributes<ByteCodeAttribute>(fromType).First(b => b.ByteCode == ByteCode.IL).Type ?? throw new NullReferenceException("IL type not set");
 
         public static byte[] Emit(T fromType, ByteCode toByteCode) => GetAttributes<ByteCodeAttribute>(fromType).First(b => b.ByteCode == toByteCode).OpCode ?? throw new NullReferenceException("OpCode not set");
+
+        public static bool ParseBoolean(T fromType) => GetAttributes<BooleanValueAttribute>(fromType).First().Value;
 
         private static IEnumerable<A> GetAttributes<A>(T p) where A: Attribute
         {
