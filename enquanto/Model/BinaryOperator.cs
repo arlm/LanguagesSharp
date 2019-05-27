@@ -1,6 +1,6 @@
 ﻿namespace enquanto.Model
 {
-    public enum BinaryOperator
+    internal enum BinaryOperator
     {
         ADD,
         SUB,

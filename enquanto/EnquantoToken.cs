@@ -7,11 +7,11 @@ namespace enquanto
     {
         #region keywords 0 -> 19
 
-        [Lexeme("(se)")] IF = 1,
+        [Lexeme("(então)")] THEN = 1,
 
-        [Lexeme("(então)")] THEN = 2,
+        [Lexeme("(senão)")] ELSE = 2,
 
-        [Lexeme("(senão)")] ELSE = 3,
+        [Lexeme("(se)")] IF = 3,
 
         [Lexeme("(enquanto)")] WHILE = 4,
 
@@ -22,6 +22,7 @@ namespace enquanto
         [Lexeme("(verdadeiro)")] TRUE = 7,
 
         [Lexeme("(falso)")] FALSE = 8,
+
         [Lexeme("(não)")] NOT = 9,
 
         [Lexeme("(e)")] AND = 10,

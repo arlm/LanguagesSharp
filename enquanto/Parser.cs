@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BabelFish.AST;
 using enquanto.Model;
@@ -55,50 +54,50 @@ namespace enquanto
         }
 
         [Production("statement :  LPAREN [d] statement RPAREN [d]")]
-        public INode<EnquantoType> Block(IStatement<EnquantoType> statement)
+        public INode<EnquantoType> Block(INode<EnquantoType> statement)
         {
-            return statement;
+            return statement as IStatement<EnquantoType>;
         }
 
         [Production("statement : sequence")]
         public INode<EnquantoType> StatementSequence(INode<EnquantoType> sequence)
         {
-            return sequence;
+            return sequence as IStatement<EnquantoType>;
         }
 
         [Production("sequence : statementPrim additionalStatements*")]
         public INode<EnquantoType> SequenceStatements(INode<EnquantoType> first, IEnumerable<INode<EnquantoType>> next)
         {
             var seq = new SequenceStatement(first as IStatement<EnquantoType>);
-            seq.AddRange(next.Cast<IStatement<EnquantoType>>().ToList());
+            seq?.AddRange(next.Cast<IStatement<EnquantoType>>().ToList());
             return seq;
         }
 
         [Production("additionalStatements : SEMICOLON [d] statementPrim")]
         public INode<EnquantoType> Additional(INode<EnquantoType> statement)
         {
-            return statement;
+            return statement as IStatement<EnquantoType>;
         }
 
-        [Production("statementPrim: IF [d] WhileParser_expressions THEN [d] statement ELSE [d] statement")]
-        public INode<EnquantoType> IfStmt(INode<EnquantoType> cond, INode<EnquantoType> thenStmt, IStatement<EnquantoType> elseStmt)
+        [Production("statementPrim: IF [d] Parser_expressions THEN [d] statement ELSE [d] statement")]
+        public INode<EnquantoType> IfStmt(INode<EnquantoType> cond, INode<EnquantoType> thenStmt, INode<EnquantoType> elseStmt)
         {
-            var stmt = new IfStatement(cond as IExpression<EnquantoType>, thenStmt as IStatement<EnquantoType>, elseStmt);
-            return stmt;
+            var stmt = new IfStatement(cond as IExpression<EnquantoType>, thenStmt as IStatement<EnquantoType>, elseStmt as IStatement<EnquantoType>);
+            return stmt as IStatement<EnquantoType>;
         }
 
-        [Production("statementPrim: WHILE [d] WhileParser_expressions DO [d] statement")]
+        [Production("statementPrim: WHILE [d] Parser_expressions DO [d] statement")]
         public INode<EnquantoType> WhileStmt(INode<EnquantoType> cond, INode<EnquantoType> blockStmt)
         {
             var stmt = new WhileStatement(cond as IExpression<EnquantoType>, blockStmt as IStatement<EnquantoType>);
-            return stmt;
+            return stmt as IStatement<EnquantoType>;
         }
 
-        [Production("statementPrim: IDENTIFIER ASSIGN [d] WhileParser_expressions")]
-        public INode<EnquantoType> AssignStmt(Token<EnquantoType> variable, IExpression<EnquantoType> value)
+        [Production("statementPrim: IDENTIFIER ASSIGN [d] Parser_expressions")]
+        public INode<EnquantoType> AssignStmt(Token<EnquantoType> variable, INode<EnquantoType> value)
         {
-            var assign = new AssignStatement(variable.StringWithoutQuotes, value);
-            return assign;
+            var assign = new AssignStatement(variable.StringWithoutQuotes, value as IExpression<EnquantoType>);
+            return assign as IStatement<EnquantoType>;
         }
 
         [Production("statementPrim: SKIP [d]")]
@@ -107,14 +106,14 @@ namespace enquanto
             return new SkipStatement();
         }
 
-        [Production("statementPrim: RETURN [d] WhileParser_expressions")]
+        [Production("statementPrim: RETURN [d] Parser_expressions")]
         public INode<EnquantoType> ReturnStmt(INode<EnquantoType> expression)
         {
             return new ReturnStatement(expression as IExpression<EnquantoType>);
         }
 
-        [Production("statementPrim: PRINT [d] WhileParser_expressions")]
-        public INode<EnquantoType> SkipStmt(INode<EnquantoType> expression)
+        [Production("statementPrim: PRINT [d] Parser_expressions")]
+        public INode<EnquantoType> PrintStmt(INode<EnquantoType> expression)
         {
             return new PrintStatement(expression as IExpression<EnquantoType>);
         }
@@ -210,7 +209,6 @@ namespace enquanto
         {
             var oper = BinaryOperator.OR;
 
-
             var operation = new BinaryOperation(left as IExpression<EnquantoType>, oper, right as IExpression<EnquantoType>);
             return operation;
         }
@@ -219,7 +217,6 @@ namespace enquanto
         public INode<EnquantoType> BinaryAndExpression(INode<EnquantoType> left, Token<EnquantoToken> operatorToken, INode<EnquantoType> right)
         {
             var oper = BinaryOperator.AND;
-
 
             var operation = new BinaryOperation(left as IExpression<EnquantoType>, oper, right as IExpression<EnquantoType>);
             return operation;

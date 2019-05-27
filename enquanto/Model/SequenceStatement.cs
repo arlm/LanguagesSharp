@@ -9,7 +9,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    public class SequenceStatement : IStatement<EnquantoType>
+    internal class SequenceStatement : AST, IStatement<EnquantoType>
     {
         public SequenceStatement() => Statements = new List<IStatement<EnquantoType>>();
 
@@ -21,11 +21,7 @@ namespace enquanto.Model
 
         public int Count => Statements.Count;
 
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
-        public TokenPosition Position { get; set; }
-
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dump = new StringBuilder();
             dump.AppendLine($"{tab}(SEQUENCE [");
@@ -34,7 +30,7 @@ namespace enquanto.Model
             return dump.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             foreach (var stmt in Statements)
             {
@@ -44,7 +40,7 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context)
+        public override string Transpile(CompilerContext<EnquantoType> context)
         {
             var block = new StringBuilder("{\n");
             foreach (var stmt in Statements)

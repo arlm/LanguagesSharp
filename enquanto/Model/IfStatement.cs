@@ -7,7 +7,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    internal class IfStatement : IStatement<EnquantoType>
+    internal class IfStatement : AST, IStatement<EnquantoType>
     {
         public IfStatement(IExpression<EnquantoType> condition, IStatement<EnquantoType> thenStmt, IStatement<EnquantoType> elseStmt)
         {
@@ -22,11 +22,7 @@ namespace enquanto.Model
 
         public IStatement<EnquantoType> ElseStmt { get; set; }
 
-        public TokenPosition Position { get; set; }
-
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dmp = new StringBuilder();
             dmp.AppendLine($"{tab}(IF");
@@ -47,7 +43,7 @@ namespace enquanto.Model
             return dmp.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             var thenLabel = emiter.DefineLabel();
             var elseLabel = emiter.DefineLabel();
@@ -65,7 +61,7 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context)
+        public override string Transpile(CompilerContext<EnquantoType> context)
         {
             var code = new StringBuilder();
             code.AppendLine($"if({Condition.Transpile(context)}) {{ ");

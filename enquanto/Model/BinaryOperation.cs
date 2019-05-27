@@ -9,7 +9,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    public class BinaryOperation : IExpression<EnquantoType>
+    internal class BinaryOperation : AST, IExpression<EnquantoType>
     {
         public IExpression<EnquantoType> Left { get; set; }
 
@@ -19,10 +19,6 @@ namespace enquanto.Model
 
         public EnquantoType Type { get; set; }
 
-        public TokenPosition Position { get; set; }
-
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
         public BinaryOperation(IExpression<EnquantoType> left, BinaryOperator oper, IExpression<EnquantoType> right)
         {
             Left = left;
@@ -31,7 +27,7 @@ namespace enquanto.Model
         }
 
         [ExcludeFromCodeCoverage]
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dmp = new StringBuilder();
             dmp.AppendLine($"{tab}(OPERATION [{Operator}]");
@@ -41,7 +37,7 @@ namespace enquanto.Model
             return dmp.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             if (Operator == BinaryOperator.CONCAT) return EmitConcat(context, emiter);
             emiter = Left.EmitByteCode(context, emiter);
@@ -104,7 +100,7 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context)
+        public override string Transpile(CompilerContext<EnquantoType> context)
         {
             var operators = new Dictionary<BinaryOperator, string>
             {

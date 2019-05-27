@@ -7,7 +7,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    internal class PrintStatement : IStatement<EnquantoType>
+    internal class PrintStatement : AST, IStatement<EnquantoType>
     {
         public PrintStatement(IExpression<EnquantoType> value)
         {
@@ -16,11 +16,7 @@ namespace enquanto.Model
 
         public IExpression<EnquantoType> Value { get; set; }
 
-        public TokenPosition Position { get; set; }
-
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dmp = new StringBuilder();
             dmp.AppendLine($"{tab}(PRINT ");
@@ -29,7 +25,7 @@ namespace enquanto.Model
             return dmp.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             var mi = typeof(Console).GetMethod("WriteLine", new[] { typeof(string) });
 
@@ -39,6 +35,6 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context) => $"System.Console.WriteLine({Value.Transpile(context)});";
+        public override string Transpile(CompilerContext<EnquantoType> context) => $"System.Console.WriteLine({Value.Transpile(context)});";
     }
 }

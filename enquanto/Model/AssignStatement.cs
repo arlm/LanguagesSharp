@@ -7,7 +7,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    internal class AssignStatement : IStatement<EnquantoType>
+    internal class AssignStatement : AST, IStatement<EnquantoType>
     {
         public AssignStatement(string variableName, IExpression<EnquantoType> value)
         {
@@ -21,11 +21,7 @@ namespace enquanto.Model
 
         public bool IsVariableCreation { get; internal set; }
 
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
-        public TokenPosition Position { get; set; }
-
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dmp = new StringBuilder();
             dmp.AppendLine($"{tab}(ASSIGN");
@@ -35,7 +31,7 @@ namespace enquanto.Model
             return dmp.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             using (Local local = IsVariableCreation
                 ? emiter.DeclareLocal(TypeConverter<EnquantoType>.Emit(CompilerScope.GetVariableType(VariableName)),
@@ -49,7 +45,7 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context)
+        public override string Transpile(CompilerContext<EnquantoType> context)
         {
             var code = new StringBuilder();
 

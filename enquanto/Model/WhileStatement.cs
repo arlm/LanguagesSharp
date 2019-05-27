@@ -7,7 +7,7 @@ using sly.lexer;
 
 namespace enquanto.Model
 {
-    internal class WhileStatement : IStatement<EnquantoType>
+    internal class WhileStatement : AST, IStatement<EnquantoType>
     {
         public WhileStatement(IExpression<EnquantoType> condition, IStatement<EnquantoType> blockStmt)
         {
@@ -19,11 +19,7 @@ namespace enquanto.Model
 
         public IStatement<EnquantoType> BlockStmt { get; set; }
 
-        public TokenPosition Position { get; set; }
-
-        public Scope<EnquantoType> CompilerScope { get; set; }
-
-        public string Dump(string tab)
+        public override string Dump(string tab)
         {
             var dmp = new StringBuilder();
             dmp.AppendLine($"{tab}(WHILE");
@@ -40,7 +36,7 @@ namespace enquanto.Model
             return dmp.ToString();
         }
 
-        public Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
+        public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             var loopLabel = emiter.DefineLabel();
             var outLabel = emiter.DefineLabel();
@@ -54,7 +50,7 @@ namespace enquanto.Model
             return emiter;
         }
 
-        public string Transpile(CompilerContext<EnquantoType> context)
+        public override string Transpile(CompilerContext<EnquantoType> context)
         {
             var code = new StringBuilder();
             code.AppendLine($"while({Condition.Transpile(context)}) {{ ");
