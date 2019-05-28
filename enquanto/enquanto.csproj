@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Compiler.cs~RF386ddc.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Sigil" Version="4.7.0" />
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
   </ItemGroup>

@@ -1,10 +1,9 @@
-﻿using System;
-using BabelFish.AST;
+﻿using BabelFish.AST;
 using sly.lexer;
 
 namespace enquanto
 {
-    public enum EnquantoToken
+	public enum EnquantoToken
     {
         #region keywords 0 -> 19
 

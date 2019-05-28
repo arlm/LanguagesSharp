@@ -33,14 +33,20 @@ namespace enquanto.Model
 
         public override Emit<Func<int>> EmitByteCode(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
-            using (Local local = IsVariableCreation
-                ? emiter.DeclareLocal(TypeConverter<EnquantoType>.Emit(CompilerScope.GetVariableType(VariableName)),
-                    VariableName)
-                : emiter.Locals[VariableName])
-            {
-                Value.EmitByteCode(context, emiter);
-                emiter.StoreLocal(local);
-            }
+			Local local = null;
+
+			if(IsVariableCreation)
+			{
+				var type = TypeConverter<EnquantoType>.Emit(CompilerScope.GetVariableType(VariableName));
+				local = emiter.DeclareLocal(type, VariableName );
+			}
+			else
+			{
+				local = emiter.Locals[VariableName];
+			}
+
+            Value.EmitByteCode(context, emiter);
+            emiter.StoreLocal(local);
 
             return emiter;
         }

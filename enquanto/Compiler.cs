@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
@@ -99,8 +100,9 @@ namespace enquanto
                     object res = function.Invoke();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+				Debug.WriteLine(ex.ToString());
                 function = null;
             }
 
