@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BabelFish.Compiler
+namespace BabelFish.AST
 {
     public class TypingException : Exception
     {

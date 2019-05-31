@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BabelFish.Compiler
+namespace BabelFish.AST
 {
     public class Signature<T> where T : Enum
     {

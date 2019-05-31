@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using BabelFish.AST;
-using sly.lexer;
 
 namespace BabelFish.Compiler
 {
-    public static class TypeConverter<T> where T : Enum
+	public static class TypeConverter<T> where T : Enum
     {
         public static string Transpile(T fromType, Language toLanguage) => GetAttributes<LanguageAttribute>(fromType).First(a => a.Language == toLanguage).Type;
 
