@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainfuck", "Brainfuck\Brai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainfuck-Test", "Brainfuck-Test\Brainfuck-Test.csproj", "{24E180BA-69BC-4640-9931-9D276D17F915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enquanto", "enquanto\enquanto.csproj", "{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enquanto.Test", "enquanto.Test\enquanto.Test.csproj", "{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BabelFish", "BabelFish\BabelFish.csproj", "{D619B5F5-96B7-4016-A661-419C1E648371}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +46,24 @@ Global
 		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|x86.ActiveCfg = Release|Any CPU
 		{24E180BA-69BC-4640-9931-9D276D17F915}.Release|x86.Build.0 = Release|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E4F0CCE-13B4-452D-BD87-89B87C6E773B}.Release|x86.Build.0 = Release|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{9AB8517D-4A7B-405F-AEED-4CA0A7BD99A3}.Release|x86.Build.0 = Release|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Release|x86.ActiveCfg = Release|Any CPU
+		{D619B5F5-96B7-4016-A661-419C1E648371}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

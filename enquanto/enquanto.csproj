@@ -12,9 +12,9 @@
   <ItemGroup>
     <PackageReference Include="Sigil" Version="4.7.0" />
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
+    <PackageReference Include="sly" Version="2.3.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\csly\sly\sly.csproj" />
     <ProjectReference Include="..\BabelFish\BabelFish.csproj" />
   </ItemGroup>
   <ItemGroup>

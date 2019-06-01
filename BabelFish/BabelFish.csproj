@@ -15,8 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Sigil" Version="4.7.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\csly\sly\sly.csproj" />
+    <PackageReference Include="sly" Version="2.3.0.1" />
   </ItemGroup>
 </Project>
