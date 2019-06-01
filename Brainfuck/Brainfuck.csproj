@@ -7,12 +7,10 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="3.0.0" />
 		<PackageReference Include="CommandLineParser" Version="2.5.0" />
+		<PackageReference Include="sly" Version="2.3.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Operators\" />
 	  <Folder Include="Runtime\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\csly\sly\sly.csproj" />
 	</ItemGroup>
 </Project>
