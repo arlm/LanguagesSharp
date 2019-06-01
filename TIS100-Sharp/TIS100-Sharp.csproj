@@ -1,19 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>TIS100Sharp</RootNamespace>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Operators\" />
-    <Folder Include="Operands\" />
-    <Folder Include="Runtime\" />
-    <Folder Include="Runtime\Nodes\" />
-    <Folder Include="Runtime\Modules\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="sly" Version="2.3.0.1" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>7.3</LangVersion>
+        <RootNamespace>TIS100Sharp</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Operators\" />
+        <Folder Include="Operands\" />
+        <Folder Include="Runtime\" />
+        <Folder Include="Runtime\Nodes\" />
+        <Folder Include="Runtime\Modules\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="sly" Version="2.3.0.1" />
+    </ItemGroup>
 </Project>
