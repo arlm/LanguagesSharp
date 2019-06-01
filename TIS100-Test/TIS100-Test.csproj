@@ -1,21 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-    <RootNamespace>TIS100Test</RootNamespace>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.11.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="sly" Version="2.3.0.1" />
-    <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TIS100-Sharp\TIS100-Sharp.csproj" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <LangVersion>7.3</LangVersion>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>TIS100Test</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="NUnit" Version="3.11.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+        <PackageReference Include="sly" Version="2.3.0.1" />
+        <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\TIS100-Sharp\TIS100-Sharp.csproj" />
+    </ItemGroup>
 </Project>

@@ -5,10 +5,13 @@
         <LangVersion>7.3</LangVersion>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Sigil" Version="4.7.0" />
         <PackageReference Include="sly" Version="2.3.0.1" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Operators\" />
-        <Folder Include="Runtime\" />
+        <ProjectReference Include="..\BabelFish\BabelFish.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Model\" />
     </ItemGroup>
 </Project>
