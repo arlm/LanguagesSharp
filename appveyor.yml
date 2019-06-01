@@ -4,6 +4,17 @@ image:
 - Visual Studio 2017
 - Ubuntu1804
 configuration: Release
+install:
+- cmd: |
+    dotnet restore
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 build:
   project: LanguagesSharp.sln
   verbosity: minimal
