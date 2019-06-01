@@ -2,7 +2,7 @@ version: 0.1.{build}
 image:
 - Visual Studio 2019
 - Visual Studio 2017
-#- Ubuntu1804
+- Ubuntu1804
 configuration: Release
 install:
 - cmd: |
@@ -18,17 +18,25 @@ dotnet_csproj:
 build:
   project: LanguagesSharp.sln
   verbosity: minimal
+after_build:
+- cmd: >-
+    dotnet publish --self-contained false
+
+    dotnet pack
+
+- sh: >-
+    dotnet publish --self-contained false
+
+    dotnet pack
+
 artifacts:
-- path: Brainfuck/bin/Release/**/*
-  name: Brainfuck
-- path: BabelFish/bin/Release/**/*
-  name: BabelFish
-- path: enquanto/bin/Release/**/*
-  name: enquanto-lang
-- path: TIS100-Sharp/bin/Release/**/*
-  name: TIS100-Sharp
+- path: '**/*.nupkg'
+  name: Nuget
+- path: '**/publish/*'
+  name: Binaries
 test_script:
 - cmd: dotnet test --no-build --no-restore --logger:Appveyor
+- sh: dotnet test --no-build --no-restore --logger:Appveyor
 # clone_script:
 # - cmd: git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
 # - cmd: git checkout -qf %APPVEYOR_REPO_COMMIT%

@@ -1,8 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>7.3</LangVersion>
+        <RootNamespace>BabelFish</RootNamespace>
+        <Copyright>© 2019 - Alexandre Rocha Lima e Marcondes</Copyright>
+        <Owners>Alexandre Rocha Lima e Marcondes</Owners>
+        <PackageTags>parser;compiler</PackageTags>
+        <Title>Babel Fish</Title>
+        <Company>Alexandre Rocha Lima e Marcondes</Company>
+        <Product>BabelFish</Product>
+        <Description>A common infrastructure to build compilers, parsers and interpreters using C# Lex Yacc (sly)</Description>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <RepositoryUrl>https://github.com/arlm/LanguagesSharp.git</RepositoryUrl>
+        <PackageId>babelfish</PackageId>
+        <Authors>Alexandre Rocha Lima e Marcondes</Authors>
+        <Summary>Create compilers, parsers and interpreters using C# Lex Yacc (sly)</Summary>
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Compiler\" />

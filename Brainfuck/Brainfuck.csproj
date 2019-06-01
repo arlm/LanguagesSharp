@@ -3,6 +3,20 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>7.3</LangVersion>
+        <RootNamespace>Brainfuck</RootNamespace>
+        <Copyright>© 2019 - Alexandre Rocha Lima e Marcondes</Copyright>
+        <Owners>Alexandre Rocha Lima e Marcondes</Owners>
+        <PackageTags>compiler;parser;interpreter;brainfuck</PackageTags>
+        <Title>Brainfuck</Title>
+        <Company>Alexandre Rocha Lima e Marcondes</Company>
+        <Product>Brainfuck</Product>
+        <Description>A Brainfuck compiler, parser and interpreter</Description>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <RepositoryUrl>https://github.com/arlm/LanguagesSharp.git</RepositoryUrl>
+        <PackageId>brainfuck</PackageId>
+        <Authors>Alexandre Rocha Lima e Marcondes</Authors>
+        <Summary>A Brainfuck compiler, parser and interpreter created using C# Lex Yacc (sly)</Summary>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="sly" Version="2.3.0.1" />
