@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>7.3</LangVersion>
         <RootNamespace>TIS100Sharp</RootNamespace>
+        <IsTestProject>false</IsTestProject>
         <Copyright>© 2019 - Alexandre Rocha Lima e Marcondes</Copyright>
         <Owners>Alexandre Rocha Lima e Marcondes</Owners>
         <PackageTags>compiler;parser;interpreter;brainfuck</PackageTags>
