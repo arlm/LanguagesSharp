@@ -1,0 +1,18 @@
+version: 0.1.{build}
+image:
+- Visual Studio 2019
+- Visual Studio 2017
+- Ubuntu1804
+configuration: Release
+build:
+  project: LanguagesSharp.sln
+  verbosity: minimal
+artifacts:
+- path: Brainfuck/bin/Release/*
+  name: Brainfuck
+- path: BabelFish/bin/Release/*
+  name: BabelFish
+- path: enquanto/bin/Release/*
+  name: enquanto-lang
+- path: TIS100-Sharp/bin/Release/*
+  name: TIS100-Sharp
