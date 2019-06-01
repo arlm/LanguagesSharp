@@ -2,7 +2,6 @@
 using BabelFish.AST;
 using BabelFish.Compiler;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {

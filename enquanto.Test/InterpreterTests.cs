@@ -1,3 +1,4 @@
+using BabelFish.Interpreter;
 using enquanto;
 using enquanto.Model;
 using NUnit.Framework;
@@ -9,7 +10,6 @@ namespace Tests
 {
     public class IntrerpreterTests
     {
-        /*
         private static BuildResult<Parser<EnquantoToken, AST>> Parser;
 
 
@@ -20,14 +20,13 @@ namespace Tests
                 var whileParser = new Parser();
                 var builder = new ParserBuilder<EnquantoToken, AST>();
                 Parser = builder.BuildParser(whileParser, ParserType.EBNF_LL_RECURSIVE_DESCENT, "statement");
-                ;
             }
 
             return Parser;
         }
 
 
-        public bool CheckIntVariable(InterpreterContext context, string variable, int value)
+        public bool CheckIntVariable(InterpreterContext<EnquantoType> context, string variable, int value)
         {
             var ok = false;
             if (context.GetVariable(variable) != null)
@@ -67,7 +66,6 @@ namespace Tests
         {
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
-            var parser = buildResult.Result;
         }
 
         [Test]
@@ -76,10 +74,9 @@ namespace Tests
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("(a:=0; while a < 10 do (print a; a := a +1 ))");
+            var result = parser.Parse("(a:=0; enquanto a < 10 faça (imprima a; a := a +1 ))");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
-            ;
         }
 
         [Test]
@@ -88,11 +85,11 @@ namespace Tests
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("(a:=0; while a < 10 do (print a; a := a +1 ))");
+            var result = parser.Parse("(a:=0; enquanto a < 10 faça (imprima a; a := a +1 ))");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
             var interpreter = new Interpreter();
-            var context = interpreter.Interprete(result.Result, true);
+            var context = interpreter.Execute(result.Result, true);
             Assert.That(context.variables, Has.Exactly(1).Items);
             Assert.True(CheckIntVariable(context, "a", 10));
         }
@@ -104,11 +101,11 @@ namespace Tests
 (
     r:=1;
     i:=1;
-    while i < 11 do 
+    enquanto i < 11 faça 
     ( 
     r := r * i;
-    print r;
-    print i;
+    imprima r;
+    imprima i;
     i := i + 1 )
 )";
             var buildResult = BuildParser();
@@ -118,15 +115,11 @@ namespace Tests
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
             var interpreter = new Interpreter();
-            var context = interpreter.Interprete(result.Result, true);
+            var context = interpreter.Execute(result.Result, true);
             Assert.That(context.variables.Count, Is.EqualTo(2));
             Assert.True(CheckIntVariable(context, "i", 11));
             Assert.True(CheckIntVariable(context, "r", 3628800));
-
-
-            ;
         }
-
 
         [Test]
         public void TestFactorialProgramExecAsIL()
@@ -135,20 +128,19 @@ namespace Tests
 (
     r:=1;
     i:=1;
-    while i < 11 do 
+    enquanto i < 11 faça 
     ( 
     r := r * i;
-    print """".r;
-    print """".i;
+    imprima """".r;
+    imprima """".i;
     i := i + 1 );
-return r
+retorne r
 )";
             var compiler = new Compiler();
             var func = compiler.CompileToFunction(program);
             Assert.NotNull(func);
             var f = func();
             Assert.That(f, Is.EqualTo(3628800));
-            ;
         }
 
         [Test]
@@ -157,7 +149,7 @@ return r
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("if true then (a := \"hello\") else (b := \"world\")");
+            var result = parser.Parse("se verdadeiro então (a := \"hello\") senão (b := \"world\")");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
 
@@ -170,15 +162,14 @@ return r
             Assert.True((cond as BoolConstant).Value);
             var s = si.ThenStmt;
 
-            Assert.That(si.ThenStmt, Is.TypeOf<SequenceStatement>());
-            var thenBlock = si.ThenStmt as SequenceStatement;
+            Assert.That(s, Is.TypeOf<SequenceStatement>());
+            var thenBlock = s as SequenceStatement;
             Assert.That(thenBlock.Count, Is.EqualTo(1));
             Assert.That(thenBlock.Get(0), Is.TypeOf<AssignStatement>());
             var thenAssign = thenBlock.Get(0) as AssignStatement;
             Assert.That(thenAssign.VariableName, Is.EqualTo("a"));
             Assert.That(thenAssign.Value, Is.TypeOf<StringConstant>());
             Assert.That((thenAssign.Value as StringConstant).Value, Is.EqualTo("hello"));
-            ;
 
             Assert.That(si.ElseStmt, Is.TypeOf<SequenceStatement>());
             var elseBlock = si.ElseStmt as SequenceStatement;
@@ -196,7 +187,7 @@ return r
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("while true do (skip)");
+            var result = parser.Parse("enquanto verdadeiro faça (pule)");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
 
@@ -212,7 +203,6 @@ return r
             var seqBlock = whil.BlockStmt as SequenceStatement;
             Assert.That(seqBlock.Count, Is.EqualTo(1));
             Assert.That(seqBlock.Get(0), Is.TypeOf<SkipStatement>());
-            ;
         }
 
         [Test]
@@ -221,7 +211,7 @@ return r
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("print true and false");
+            var result = parser.Parse("imprima verdadeiro e falso");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
 
@@ -244,7 +234,7 @@ return r
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("skip");
+            var result = parser.Parse("pule");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
 
@@ -276,14 +266,13 @@ return r
             }
         }
 
-
         [Test]
         public void TestSkipSkipSequence()
         {
             var buildResult = BuildParser();
             Assert.False(buildResult.IsError);
             var parser = buildResult.Result;
-            var result = parser.Parse("(skip; skip; skip)");
+            var result = parser.Parse("(pule; pule; pule)");
             Assert.False(result.IsError);
             Assert.NotNull(result.Result);
             Assert.That(result.Result, Is.TypeOf<SequenceStatement>());
@@ -293,6 +282,5 @@ return r
             Assert.That(seq.Get(1), Is.TypeOf<SkipStatement>());
             Assert.That(seq.Get(2), Is.TypeOf<SkipStatement>());
         }
-        */
     }
 }
