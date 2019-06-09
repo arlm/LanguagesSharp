@@ -20,8 +20,8 @@
         <Summary>A Portuguese WHILE-lang compiler, parser and interpreter created using C# Lex Yacc (sly)</Summary>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Sigil" Version="4.7.0" />
         <PackageReference Include="sly" Version="2.3.0.1" />
+        <PackageReference Include="Sigil.NetStandard" Version="4.8.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\BabelFish\BabelFish.csproj" />

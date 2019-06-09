@@ -14,7 +14,6 @@ namespace Brainfuck
         [Lexeme("\\]")] CLOSE_BRACKET,
 
         [Lexeme("[\\n\\r]+", true, true)] EOL,
-        [Lexeme("[ \\t]+", true)] WHITE_SPACE,
         [Lexeme("[^<>\\+\\-\\.,\\[\\]]+", true)] TEXT,
         EOF = 0
     }

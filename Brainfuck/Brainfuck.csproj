@@ -21,9 +21,13 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="sly" Version="2.3.0.1" />
+        <PackageReference Include="Sigil.NetStandard" Version="4.8.0" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Operators\" />
         <Folder Include="Runtime\" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\BabelFish\BabelFish.csproj" />
     </ItemGroup>
 </Project>
