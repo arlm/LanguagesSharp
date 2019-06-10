@@ -2,8 +2,8 @@
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {
@@ -30,6 +30,16 @@ namespace enquanto.Model
             var mi = typeof(Console).GetMethod("WriteLine", new[] { typeof(string) });
 
             emiter = Value.EmitByteCode(context, emiter);
+            emiter.Call(mi);
+
+            return emiter;
+        }
+
+        public override IEmitter EmitByteCode(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            var mi = typeof(Console).GetMethod("WriteLine", new[] { typeof(string) });
+
+            emiter = (Value as AST).EmitByteCode(context, emiter);
             emiter.Call(mi);
 
             return emiter;

@@ -2,8 +2,9 @@
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
+using Enquanto;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {
@@ -47,6 +48,32 @@ namespace enquanto.Model
 
             Value.EmitByteCode(context, emiter);
             emiter.StoreLocal(local);
+
+            return emiter;
+        }
+
+        public override IEmitter EmitByteCode(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            ILocal local = null;
+
+            if (IsVariableCreation)
+            {
+                var type = TypeConverter<EnquantoType>.Emit(CompilerScope.GetVariableType(VariableName));
+                emiter.DeclareLocal(type, VariableName, out local);
+            }
+            else
+            {
+                local = context.CurrentScope.GetLocal(VariableName);
+
+                if (local == null)
+                {
+                    throw new ContextException<EnquantoType>(VariableName, context);
+                }
+            }
+
+            (Value as AST).EmitByteCode(context, emiter);
+
+            emiter.StLoc(local);
 
             return emiter;
         }

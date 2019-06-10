@@ -2,8 +2,8 @@
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {
@@ -42,11 +42,39 @@ namespace enquanto.Model
             var outLabel = emiter.DefineLabel();
 
             emiter.MarkLabel(loopLabel);
+
             Condition.EmitByteCode(context, emiter);
+
             emiter.BranchIfFalse(outLabel);
+
             BlockStmt.EmitByteCode(context, emiter);
+
             emiter.Branch(loopLabel);
             emiter.MarkLabel(outLabel);
+            return emiter;
+        }
+
+        public override IEmitter EmitByteCode(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            var guid = Guid.NewGuid().ToString().Replace("-", "");
+            var outLabel = $"End_Loop_{guid}";
+            string loopLabel = $"Loop_{guid}";
+
+            emiter.DefineLabel(loopLabel, out var loop);
+            emiter.DefineLabel(outLabel, out var @out);
+
+            emiter.MarkLabel(loop);
+
+            (Condition as AST).EmitByteCode(context, emiter);
+
+            emiter.BrFalse(@out);
+
+            (BlockStmt as AST).EmitByteCode(context, emiter);
+
+            emiter.Br(loop);
+
+            emiter.MarkLabel(@out);
+
             return emiter;
         }
 

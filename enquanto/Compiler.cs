@@ -2,9 +2,8 @@
 using System.Diagnostics;
 using System.Text;
 using BabelFish.AST;
-using BabelFish.Compiler;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 using sly.parser;
 using sly.parser.generator;
 
@@ -47,20 +46,42 @@ namespace enquanto
             return classCode.ToString();
         }
 
-        public string TranspileToCSharp(string whileCode)
+        public string Dump(string code)
+        {
+            string dump = null;
+
+            try
+            {
+                var result = enquantoParser.Parse(code);
+
+                if (result.IsOk)
+                {
+                    var ast = result.Result;
+
+                    dump = ast.Dump(string.Empty);
+                }
+            }
+            catch
+            {
+                dump = null;
+            }
+
+            return dump;
+        }
+
+        public string TranspileToCSharp(string code)
         {
             string sharpCode = null;
 
             try
             {
-                var result = enquantoParser.Parse(whileCode);
+                var result = enquantoParser.Parse(code);
 
                 if (result.IsOk)
                 {
                     var ast = result.Result;
 
                     var checker = new SemanticChecker();
-
                     var context = checker.SemanticCheck(ast);
 
                     sharpCode = ast.Transpile(context);
@@ -76,13 +97,48 @@ namespace enquanto
             return sharpCode;
         }
 
-        public Func<int> CompileToFunction(string whileCode)
+        public bool CreateConsoleApp(string code, string fileName, string moduleName)
+        {
+            try
+            {
+                var result = enquantoParser.Parse(code);
+                var ast = result.Result as AST;
+
+                var checker = new SemanticChecker();
+                var context = checker.SemanticCheck(ast);
+
+                string typeName = GetClassName(Guid.NewGuid().ToString());
+
+                var type = new TypeFactory(fileName, moduleName)
+                    .NewType(typeName)
+                    .Public()
+                    .Class();
+
+                var main = type
+                    .NewMethod("main")
+                    .Static()
+                    .HideBySig()
+                    .Param(typeof(string[]), "args");
+
+                ast.EmitByteCode(context, main.Body());
+
+                //type.Save();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public Func<int> CompileToFunction(string code)
         {
             Func<int> function = null;
 
             try
             {
-                var result = enquantoParser.Parse(whileCode);
+                var result = enquantoParser.Parse(code);
 
                 if (result.IsOk)
                 {
@@ -94,8 +150,7 @@ namespace enquanto
                     var emiter = Emit<Func<int>>.NewDynamicMethod("Method" + Guid.NewGuid());
 
                     emiter = ast.EmitByteCode(context, emiter);
-                    //emiter.LoadConstant(42);                    
-                    //emiter.Return();
+
                     function = emiter.CreateDelegate();
                     object res = function.Invoke();
                 }

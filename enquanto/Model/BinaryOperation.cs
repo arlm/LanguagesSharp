@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {
@@ -42,6 +42,7 @@ namespace enquanto.Model
             if (Operator == BinaryOperator.CONCAT) return EmitConcat(context, emiter);
             emiter = Left.EmitByteCode(context, emiter);
             emiter = Right.EmitByteCode(context, emiter);
+
             switch (Operator)
             {
                 case BinaryOperator.ADD:
@@ -124,9 +125,74 @@ namespace enquanto.Model
             return code.ToString();
         }
 
+        public override IEmitter EmitByteCode(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            if (Operator == BinaryOperator.CONCAT) return EmitConcat(context, emiter);
+            emiter = (Left as AST).EmitByteCode(context, emiter);
+            emiter = (Right as AST).EmitByteCode(context, emiter);
+
+            switch (Operator)
+            {
+                case BinaryOperator.ADD:
+                    {
+                        emiter = emiter.Add();
+                        break;
+                    }
+                case BinaryOperator.SUB:
+                    {
+                        emiter = emiter.Sub();
+                        break;
+                    }
+                case BinaryOperator.MULTIPLY:
+                    {
+                        emiter = emiter.Mul();
+                        break;
+                    }
+                case BinaryOperator.DIVIDE:
+                    {
+                        emiter = emiter.Div();
+                        break;
+                    }
+                case BinaryOperator.EQUALS:
+                    {
+                        emiter = emiter.Ceq();
+                        break;
+                    }
+                case BinaryOperator.DIFFERENT:
+                    {
+                        emiter = emiter.Ceq();
+                        emiter = emiter.Not();
+                        break;
+                    }
+                case BinaryOperator.OR:
+                    {
+                        emiter = emiter.Or();
+                        break;
+                    }
+                case BinaryOperator.AND:
+                    {
+                        emiter = emiter.And();
+                        break;
+                    }
+                case BinaryOperator.LESSER:
+                    {
+                        emiter = emiter.Clt();
+                        break;
+                    }
+                case BinaryOperator.GREATER:
+                    {
+                        emiter = emiter.Cgt();
+                        break;
+                    }
+            }
+
+            return emiter;
+        }
+
         private Emit<Func<int>> EmitConcat(CompilerContext<EnquantoType> context, Emit<Func<int>> emiter)
         {
             Left.EmitByteCode(context, emiter);
+
             if (Left.Type != EnquantoType.STRING)
             {
                 var t = TypeConverter<EnquantoType>.Emit(Left.Type);
@@ -134,6 +200,30 @@ namespace enquanto.Model
             }
 
             Right.EmitByteCode(context, emiter);
+
+            if (Right.Type != EnquantoType.STRING)
+            {
+                var t = TypeConverter<EnquantoType>.Emit(Right.Type);
+                emiter.Box(t);
+            }
+
+            var mi = typeof(string).GetMethod("Concat", new[] { typeof(object), typeof(object) });
+            emiter.Call(mi);
+            return emiter;
+        }
+
+        private IEmitter EmitConcat(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            (Left as AST).EmitByteCode(context, emiter);
+
+            if (Left.Type != EnquantoType.STRING)
+            {
+                var t = TypeConverter<EnquantoType>.Emit(Left.Type);
+                emiter.Box(t);
+            }
+
+            (Right as AST).EmitByteCode(context, emiter);
+
             if (Right.Type != EnquantoType.STRING)
             {
                 var t = TypeConverter<EnquantoType>.Emit(Right.Type);

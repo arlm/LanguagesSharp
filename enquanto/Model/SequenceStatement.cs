@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using BabelFish.AST;
 using BabelFish.Compiler;
+using FluentIL;
 using Sigil;
-using sly.lexer;
 
 namespace enquanto.Model
 {
@@ -58,5 +58,15 @@ namespace enquanto.Model
         public void Add(IStatement<EnquantoType> statement) => Statements.Add(statement);
 
         public void AddRange(List<IStatement<EnquantoType>> statements) => Statements.AddRange(statements);
+
+        public override IEmitter EmitByteCode(CompilerContext<EnquantoType> context, IEmitter emiter)
+        {
+            foreach (AST stmt in Statements)
+            {
+                emiter = stmt.EmitByteCode(context, emiter);
+            }
+
+            return emiter;
+        }
     }
 }

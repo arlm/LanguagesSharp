@@ -46,7 +46,6 @@ namespace BabelFish.Compiler
             return scope;
         }
 
-
         /// <summary>
         ///     Set a variable type
         /// </summary>
@@ -59,7 +58,6 @@ namespace BabelFish.Compiler
             variables[name] = variableType;
             return creation;
         }
-
 
         public T GetVariableType(string name)
         {
