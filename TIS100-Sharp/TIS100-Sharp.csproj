@@ -25,8 +25,12 @@
         <Folder Include="Runtime\" />
         <Folder Include="Runtime\Nodes\" />
         <Folder Include="Runtime\Modules\" />
+        <Folder Include="Model\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="sly" Version="2.3.0.1" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\BabelFish\BabelFish.csproj" />
     </ItemGroup>
 </Project>

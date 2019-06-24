@@ -12,7 +12,7 @@ namespace TIS100Test
         [Test]
         public void LeftDoubleRight()
         {
-            var parser = Tis100Parser.Build();
+            var parser = Parser.Build();
             var result = parser.Parse(@"
 MOV LEFT, ACC
 ADD ACC
@@ -45,7 +45,7 @@ MOV ACC, RIGHT
         [Test]
         public void SequenceSorter()
         {
-            var parser = Tis100Parser.Build();
+            var parser = Parser.Build();
             var result = parser.Parse(@"
 START:
     MOV UP, ACC

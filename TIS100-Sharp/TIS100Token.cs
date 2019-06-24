@@ -2,7 +2,7 @@
 
 namespace TIS100Sharp
 {
-    public enum Tis100Token
+    public enum TIS100Token
     {
         NOP = 1,
 
